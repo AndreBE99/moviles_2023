@@ -1,16 +1,22 @@
 name: bibliobook
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.0-375.0.dev <4.0.0'
+  sdk: ">=3.0.0-375.0.dev <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
+  firebase_auth: ^4.4.0
+  firebase_core: ^2.9.0
+  google_sign_in: ^6.0.2
+  bloc: ^8.1.1
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:
