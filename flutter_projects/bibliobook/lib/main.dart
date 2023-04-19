@@ -1,4 +1,7 @@
 import 'package:bibliobook/pages/home/home_page.dart';
+import 'package:bibliobook/providers/choose_picture_provider.dart';
+import 'package:bibliobook/providers/notes_provider.dart';
+import 'package:bibliobook/providers/record_audio_provider.dart';
 import 'package:bibliobook/providers/search_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -14,13 +17,12 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => AuthBloc()..add(VerifyAuthEvent()),
-        ),
-        // TODO: agregar aqui el provider de buscar libro (cuando este listo)
+        BlocProvider(create: (context) => AuthBloc()..add(VerifyAuthEvent())),
         ChangeNotifierProvider(
-          create: (context) => SearchProvider()..fetchBooks(),
-        )
+            create: (context) => SearchProvider()..fetchBooks()),
+        ChangeNotifierProvider(create: (context) => ChoosePictureProvider()),
+        ChangeNotifierProvider(create: (context) => RecordAudioProvider()),
+        ChangeNotifierProvider(create: (context) => NotesProvider()),
       ],
       child: MyApp(),
     ),
@@ -39,11 +41,12 @@ class MyApp extends StatelessWidget {
       home: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text("Favor de autenticarse. ${state.eMsg}"),
-              ),
-            );
+            // TODO: revisar bug que no encuentra scaffold
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   SnackBar(
+            //     content: Text("Favor de autenticarse. ${state.eMsg}"),
+            //   ),
+            // );
           }
         },
         builder: (context, state) {

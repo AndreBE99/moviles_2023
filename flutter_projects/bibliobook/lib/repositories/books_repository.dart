@@ -23,7 +23,8 @@ class BooksRepository {
     try {
       final response = await get(_uri);
       if (response.statusCode == HttpStatus.ok) {
-        return BookCase.fromJson(response.body);
+        BookCase _bookCase = BookCase.fromJson(response.body);
+        return _bookCase;
       } else {
         return BookCase(totalItems: 0);
       }

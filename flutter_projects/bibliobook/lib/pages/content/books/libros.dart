@@ -1,6 +1,5 @@
 import 'package:bibliobook/providers/search_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_shimmer/flutter_shimmer.dart';
 import 'package:provider/provider.dart';
 
@@ -11,21 +10,19 @@ class Libros extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchProvider>(
-      builder: (context, provider, _) {
-        if (provider.isLoading) {
-          return _showLoadingWidget();
-        } else {
-          return _showContentWidget(context);
-        }
-      },
-    );
+    return Consumer<SearchProvider>(builder: (context, provider, _) {
+      if (provider.isLoading) {
+        return _showLoadingWidget();
+      } else {
+        return _showContentWidget(context);
+      }
+    });
   }
 
   Widget _showContentWidget(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<SearchProvider>().fetchBooks();
+        await context.read<SearchProvider>().fetchBooks();
       },
       child: GridView.count(
         // 2 columnas

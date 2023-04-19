@@ -6,6 +6,12 @@ import 'package:flutter/foundation.dart';
 import '../repositories/books_repository.dart';
 
 class SearchProvider with ChangeNotifier {
+  static final SearchProvider _searchProvider = SearchProvider._internal();
+  factory SearchProvider() {
+    return _searchProvider;
+  }
+  SearchProvider._internal();
+
   BooksRepository _bookRepo = BooksRepository();
   List<Book> bookList = [];
   bool isLoading = false;
@@ -14,6 +20,7 @@ class SearchProvider with ChangeNotifier {
     try {
       isLoading = true;
       notifyListeners();
+      // si no le pasamos datos que tome un tema random
       if (query == "") query = _getRandomTopic();
       var bookCase = await _bookRepo.getAvailableBooks(query);
       bookList = bookCase.items ?? [];
