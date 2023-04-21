@@ -53,7 +53,11 @@ class NotesForm extends StatelessWidget {
           ),
           ElevatedButton(
             child: Text("Guardar"),
-            onPressed: () {},
+            onPressed: () async {
+              await context.read<NotesProvider>().guardarNotasLibros();
+              context.read<NotesProvider>().clearForm();
+              Navigator.of(context).pop();
+            },
           ),
         ],
       ),
